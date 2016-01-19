@@ -13,11 +13,15 @@
 
     function getInstances() {
       return $http
-        .get('http://localhost:8080/elements/api-v2/elements')
-        .then(Utility.handleApiResponse())
-        .catch(Utility.handleApiFailure());
+        .get('http://localhost:8080/elements/api-v2/instances')
+        .then(function(response) {
+          return Utility.handleApiResponse(response);
+        })
+        .catch(function(error) {
+          return Utility.handleApiFailure(error);
+        });
     }
 
-  };
+  }
 
-})()
+})();
