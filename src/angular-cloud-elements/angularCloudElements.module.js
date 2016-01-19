@@ -11,6 +11,7 @@
       });
 
   // Modules
+  angular.module('angularCloudElements.utilities', []);
   angular.module('angularCloudElements.directives', []);
   angular.module('angularCloudElements.filters', []);
   angular.module('angularCloudElements.services', []);
