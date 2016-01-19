@@ -18,6 +18,7 @@
   angular.module('angularCloudElements',
       [
           'angularCloudElements.config',
+          'angularCloudElements.utilities',
           'angularCloudElements.directives',
           'angularCloudElements.filters',
           'angularCloudElements.services',
