@@ -10,6 +10,10 @@ describe('ElementService', function () {
     ElementService = _ElementService_;
   }));
 
+  it('can retrieve element instances for a user', function() {
+
+  });
+
   it('does foo', function () {
     expect(ElementService).to.be.ok;
   })
