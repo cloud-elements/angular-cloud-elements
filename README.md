@@ -1,7 +1,7 @@
 # angular-cloud-elements
 An AngularJS Library for interacting with the Cloud Elements Platform APIs
 
-[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements)[![Circle CI](https://circleci.com/gh/cloud-elements/angular-cloud-elements.svg?style=shield&circle-token=06ba43ddb954fcb3687b5e41fbdf607f1846bbc0)](https://circleci.com/gh/cloud-elements/angular-cloud-elements)
+[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements)[![Circle CI](https://circleci.com/gh/cloud-elements/angular-cloud-elements/tree/master.svg?style=badge)](https://circleci.com/gh/cloud-elements/angular-cloud-elements/tree/master)
 
 ## Features
 - ElementService for interacting with Elements and Element Instances APIs
