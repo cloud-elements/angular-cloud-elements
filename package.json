@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/cloud-elements/angular-cloud-elements"
   },
+  "license": "ISC",
   "dependencies": {},
   "devDependencies": {
     "chai": "^1.9.1",
