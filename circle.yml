@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 5.4.0
+
+
+test:
+  pre:
+    - npm install -g phantomjs
+    - npm install -g gulp
+    - npm install -g bower
+    - bower install
+  override:
+    - gulp test
