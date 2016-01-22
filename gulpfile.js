@@ -26,6 +26,9 @@ var sourceFiles = [
   // Make sure module files are handled first
   path.join(sourceDirectory, '/**/*.module.js'),
 
+  // Include CloudElements provider
+  path.join(sourceDirectory, '/**/CloudElements.provider.js'),
+
   // Then add all JavaScript files
   path.join(sourceDirectory, '/**/*.js')
 ];
