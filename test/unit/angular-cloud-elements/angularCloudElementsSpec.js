@@ -7,7 +7,7 @@ describe('', function() {
   dependencies = [];
 
   var hasModule = function(module) {
-  return dependencies.indexOf(module) >= 0;
+    return dependencies.indexOf(module) >= 0;
   };
 
   beforeEach(function() {
@@ -28,7 +28,7 @@ describe('', function() {
   it('should load filters module', function() {
     expect(hasModule('angularCloudElements.filters')).to.be.ok;
   });
-  
+
 
 
   it('should load directives module', function() {
