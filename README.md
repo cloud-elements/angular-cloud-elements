@@ -1,7 +1,7 @@
 # angular-cloud-elements
-[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements)
-
 An AngularJS Library for interacting with the Cloud Elements Platform APIs
+
+[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements)
 
 ## Features
 - ElementService for interacting with Elements and Element Instances APIs
