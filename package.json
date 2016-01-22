@@ -5,6 +5,10 @@
     "name": "Brad Scharmann",
     "email": "bscharm@gmail.com"
   },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/cloud-elements/angular-cloud-elements"
+  },
   "dependencies": {},
   "devDependencies": {
     "chai": "^1.9.1",
