@@ -21,10 +21,7 @@
           'angularCloudElements.utilities',
           'angularCloudElements.directives',
           'angularCloudElements.filters',
-          'angularCloudElements.services',
-          'ngResource',
-          'ngCookies',
-          'ngSanitize'
+          'angularCloudElements.services'
       ]);
 
 })(angular);
