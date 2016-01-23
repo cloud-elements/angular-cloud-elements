@@ -1,13 +1,14 @@
 'use strict';
 
-describe('ElementService', function () {
+describe('ceElementService', function () {
 
-  var ElementService;
+  var ceElementService;
 
   beforeEach(module('angularCloudElements.utilities'));
+  beforeEach(module('angularCloudElements.config'));
   beforeEach(module('angularCloudElements.services'));
-  beforeEach(inject(function (_ElementService_) {
-    ElementService = _ElementService_;
+  beforeEach(inject(function (_ceElementService_) {
+    ceElementService = _ceElementService_;
   }));
 
   it('can retrieve element instances for a user', function() {
@@ -15,7 +16,7 @@ describe('ElementService', function () {
   });
 
   it('does foo', function () {
-    expect(ElementService).to.be.ok;
+    expect(ceElementService).to.be.ok;
   })
 
 });
