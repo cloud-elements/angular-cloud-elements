@@ -37,13 +37,17 @@
   function ceAuth($http)
   {
 
-    this.config = {
+    var config = {
       orgSecret: '',
       userSecret: '',
       baseUrl: ''
     };
 
-    this.setConfig = setConfig;
+    return {
+      config: config,
+      validateConfigs: validateConfigs,
+      setConfig: setConfig
+    };
 
     function validateConfigs()
     {
@@ -69,13 +73,17 @@
         throw new Error("Options must be an object");
       }
       this.config = config;
-      $http.defaults.headers = createHeaders();
+      validateConfigs.bind(this);
+      $http.defaults.headers.common = createHeaders({
+        userSecret: this.config.userSecret,
+        orgSecret: this.config.orgSecret
+      });
     }
 
-    function createHeaders()
+    function createHeaders(config)
     {
-      var userSecret = this.config.userSecret;
-      var orgSecret = this.config.orgSecret;
+      var userSecret = config.userSecret;
+      var orgSecret = config.orgSecret;
       var authString = "User " + userSecret + ", Organization " + orgSecret;
       return {
         "Authorization": authString,
@@ -103,7 +111,7 @@
 
     function getInstances() {
       return $http
-        .get('http://localhost:8080/elements/api-v2/instances')
+        .get(ceAuth.config.baseUrl + "/instances")
         .then(function (response) {
           return httpUtility.handleApiResponse(response);
         })
