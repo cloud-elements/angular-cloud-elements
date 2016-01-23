@@ -26,45 +26,72 @@
 
 })(angular);
 
-(function () {
+(function ()
+{
   angular
-    .module('angularCloudElements')
-    .provider('CloudElements', CloudElements);
+    .module('angularCloudElements.config')
+    .factory('ceAuth', ceAuth);
 
-  function CE(options) {
-    this.options = options;
-    this.setOptions = setOptions;
-    this.getUserSecret = function () {
-      return this.options.userSecret;
-    }
-    this.getBaseUrl = function () {
-      return this.options.baseUrl;
-    }
-  };
+  ceAuth.$inject = ['$http'];
 
-  function CloudElements() {
+  function ceAuth($http)
+  {
 
-    this.options = {
+    var config = {
       orgSecret: '',
       userSecret: '',
-      baseUrl: 'http://localhost:8080/elements/api-v2'
+      baseUrl: ''
     };
 
-    this.setOptions = setOptions;
+    return {
+      config: config,
+      validateConfigs: validateConfigs,
+      setConfig: setConfig
+    };
 
-    this.$get = [function () {
-        return new CE(this.options);
+    function validateConfigs()
+    {
+      var hasUserSecret = this
+        .config
+        .hasOwnProperty('userSecret');
+      var hasOrgSecret = this
+        .config
+        .hasOwnProperty('orgSecret');
+      var hasBaseUrl = this
+        .config
+        .hasOwnProperty('baseUrl');
+      if (!(hasUserSecret && hasOrgSecret && hasBaseUrl))
+      {
+        throw new Error("The configuration object is invalid");
       }
-    ];
+    }
 
+    function setConfig(config)
+    {
+      if (!angular.isObject(config))
+      {
+        throw new Error("Options must be an object");
+      }
+      this.config = config;
+      validateConfigs.bind(this);
+      $http.defaults.headers.common = createHeaders({
+        userSecret: this.config.userSecret,
+        orgSecret: this.config.orgSecret
+      });
+    }
+
+    function createHeaders(config)
+    {
+      var userSecret = config.userSecret;
+      var orgSecret = config.orgSecret;
+      var authString = "User " + userSecret + ", Organization " + orgSecret;
+      return {
+        "Authorization": authString,
+        "Content-Type": "application/json"
+      };
+    }
   }
 
-  function setOptions(options) {
-    if (!angular.isObject(options)) {
-      throw new Error("Options must be an object");
-    }
-    this.options = options;
-  };
 })();
 
 (function () {
@@ -72,22 +99,24 @@
 
   angular
     .module('angularCloudElements.services')
-    .factory('ElementService', ElementService);
+    .factory('ceElementService', ceElementService);
 
-  ElementService.$inject = ['$http', 'Utility'];
+  ceElementService.$inject = ['$http', 'httpUtility', 'ceAuth'];
 
-  function ElementService($http, Utility) {
+  function ceElementService($http, httpUtility, ceAuth) {
+
+    ceAuth.validateConfigs();
 
     return {getInstances: getInstances};
 
     function getInstances() {
       return $http
-        .get('http://localhost:8080/elements/api-v2/instances')
-        .then(function(response) {
-          return Utility.handleApiResponse(response);
+        .get(ceAuth.config.baseUrl + "/instances")
+        .then(function (response) {
+          return httpUtility.handleApiResponse(response);
         })
-        .catch(function(error) {
-          return Utility.handleApiFailure(error);
+        .catch(function (error) {
+          return httpUtility.handleApiFailure(error);
         });
     }
 
@@ -100,11 +129,11 @@
 
   angular
     .module('angularCloudElements.utilities')
-    .factory('Utility', Utility);
+    .factory('httpUtility', httpUtility);
 
-  Utility.$inject = ['$log'];
+  httpUtility.$inject = ['$log'];
 
-  function Utility($log) {
+  function httpUtility($log) {
 
     return {
       handleApiResponse: handleApiResponse,

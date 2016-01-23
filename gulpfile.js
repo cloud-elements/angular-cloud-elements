@@ -27,7 +27,7 @@ var sourceFiles = [
   path.join(sourceDirectory, '/**/*.module.js'),
 
   // Include CloudElements provider
-  path.join(sourceDirectory, '/**/CloudElements.provider.js'),
+  path.join(sourceDirectory, '/**/ceAuth.service.js'),
 
   // Then add all JavaScript files
   path.join(sourceDirectory, '/**/*.js')

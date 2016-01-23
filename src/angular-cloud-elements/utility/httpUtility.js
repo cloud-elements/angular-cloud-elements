@@ -3,11 +3,11 @@
 
   angular
     .module('angularCloudElements.utilities')
-    .factory('Utility', Utility);
+    .factory('httpUtility', httpUtility);
 
-  Utility.$inject = ['$log'];
+  httpUtility.$inject = ['$log'];
 
-  function Utility($log) {
+  function httpUtility($log) {
 
     return {
       handleApiResponse: handleApiResponse,
