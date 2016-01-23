@@ -15,7 +15,7 @@
 
     function getInstances() {
       return $http
-        .get('http://localhost:8080/elements/api-v2/instances')
+        .get(ceAuth.config.baseUrl + "/instances")
         .then(function (response) {
           return httpUtility.handleApiResponse(response);
         })
