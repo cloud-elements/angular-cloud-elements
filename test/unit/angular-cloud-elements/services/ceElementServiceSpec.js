@@ -13,7 +13,18 @@ describe('ceElements', function () {
 
     ceAuth.setConfig({userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda', orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4', baseUrl: 'http://localhost:8080/elements/api-v2'});
 
-    instances = [
+
+
+  }));
+
+  afterEach(function () {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  })
+
+  it('can make a request to retrieve all instances', function () {
+    var response;
+    var instances = [
       {
         "id": 1,
         "name": "pipedriv",
@@ -28,30 +39,6 @@ describe('ceElements', function () {
         "cachingEnabled": false
       }
     ];
-
-    instance = {
-      "id": 1,
-      "name": "pipedriv",
-      "element": {
-        "id": 150,
-        "hub": "crm"
-      },
-      "configuration": {
-        "base.url": "https://api.pipedrive.com/v1",
-        "event.notification.enabled": "false"
-      },
-      "cachingEnabled": false
-    };
-
-  }));
-
-  afterEach(function () {
-    $httpBackend.verifyNoOutstandingExpectation();
-    $httpBackend.verifyNoOutstandingRequest();
-  })
-
-  it('can make a request to retrieve all instances', function () {
-    var response;
 
     $httpBackend
       .when('GET', 'http://localhost:8080/elements/api-v2/instances')
@@ -73,6 +60,19 @@ describe('ceElements', function () {
 
   it('can make a request to retrieve an instance by id', function () {
     var response;
+    var instance = {
+      "id": 5,
+      "name": "pipedriv",
+      "element": {
+        "id": 150,
+        "hub": "crm"
+      },
+      "configuration": {
+        "base.url": "https://api.pipedrive.com/v1",
+        "event.notification.enabled": "false"
+      },
+      "cachingEnabled": false
+    };
 
     $httpBackend
       .when('GET', 'http://localhost:8080/elements/api-v2/instances/5')
@@ -90,6 +90,7 @@ describe('ceElements', function () {
       .to
       .deep
       .equal(instance);
+      
   })
 
 });
