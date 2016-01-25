@@ -12,9 +12,6 @@ describe('ceElements', function () {
     ceAuth = _ceAuth_;
 
     ceAuth.setConfig({userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda', orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4', baseUrl: 'http://localhost:8080/elements/api-v2'});
-
-
-
   }));
 
   afterEach(function () {
@@ -90,7 +87,7 @@ describe('ceElements', function () {
       .to
       .deep
       .equal(instance);
-      
+
   })
 
 });
