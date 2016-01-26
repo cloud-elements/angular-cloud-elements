@@ -11,7 +11,6 @@ describe('', function () {
   };
 
   beforeEach(function () {
-    // Get module
     module = angular.module('angularCloudElements');
     dependencies = module.requires;
   });
