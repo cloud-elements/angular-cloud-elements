@@ -31,9 +31,9 @@
     .module('angularCloudElements.config')
     .factory('ceAuth', ceAuth);
 
-  ceAuth.$inject = ['$http'];
+  ceAuth.$inject = ['httpUtility'];
 
-  function ceAuth($http) {
+  function ceAuth(httpUtility) {
 
     var config = {
       orgSecret: '',
@@ -59,7 +59,8 @@
       }
       this.config = config;
       validateConfig.bind(this);
-      $http.defaults.headers.common = createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret});
+      httpUtility.setHeaders(createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret}));
+      httpUtility.setBaseUrl(this.config.baseUrl);
     }
 
     function createHeaders(config) {
@@ -79,34 +80,20 @@
     .module('angularCloudElements.services')
     .factory('ceElements', ceElements);
 
-  ceElements.$inject = ['$http', 'httpUtility', 'ceAuth'];
+  ceElements.$inject = ['httpUtility', 'ceAuth'];
 
-  function ceElements($http, httpUtility, ceAuth) {
+  function ceElements(httpUtility, ceAuth) {
 
     ceAuth.validateConfig();
 
     return {getInstances: getInstances, getInstance: getInstance};
 
     function getInstances() {
-      return $http
-        .get(ceAuth.config.baseUrl + '/instances')
-        .then(function (response) {
-          return httpUtility.handleApiResponse(response);
-        })
-        .catch(function (error) {
-          return httpUtility.handleApiFailure(error);
-        });
+      return httpUtility.get("/instances");
     }
 
     function getInstance(instanceId) {
-      return $http
-        .get(ceAuth.config.baseUrl + '/instances/' + instanceId)
-        .then(function (response) {
-          return httpUtility.handleApiResponse(response);
-        })
-        .catch(function (error) {
-          return httpUtility.handleApiFailure(error);
-        })
+      return httpUtility.get("/instances/" + instanceId);
     }
 
   }
@@ -120,14 +107,49 @@
     .module('angularCloudElements.utilities')
     .factory('httpUtility', httpUtility);
 
-  httpUtility.$inject = ['$log'];
+  httpUtility.$inject = ['$log', '$http'];
 
-  function httpUtility($log) {
+  function httpUtility($log, $http) {
+
+    var headers;
+    var baseUrl;
 
     return {
       handleApiResponse: handleApiResponse,
-      handleApiFailure: handleApiFailure
+      handleApiFailure: handleApiFailure,
+      setHeaders: setHeaders,
+      setBaseUrl: setBaseUrl,
+      getHeaders: getHeaders,
+      getBaseUrl: getBaseUrl,
+      get: get
     };
+
+    function getHeaders() {
+      return this.headers;
+    }
+
+    function getBaseUrl() {
+      return this.baseUrl;
+    }
+
+    function get(url) {
+      return $http({
+        method: 'GET',
+        url: this.baseUrl + url
+      }).then(function(response) {
+        return handleApiResponse(response);
+      }).catch(function(error) {
+        return handleApiFailure(error);
+      });
+    }
+
+    function setHeaders(headers) {
+      this.headers = headers;
+    };
+
+    function setBaseUrl(baseUrl) {
+      this.baseUrl = baseUrl;
+    }
 
     function handleApiResponse(response) {
       return response.data;

@@ -5,34 +5,20 @@
     .module('angularCloudElements.services')
     .factory('ceElements', ceElements);
 
-  ceElements.$inject = ['$http', 'httpUtility', 'ceAuth'];
+  ceElements.$inject = ['httpUtility', 'ceAuth'];
 
-  function ceElements($http, httpUtility, ceAuth) {
+  function ceElements(httpUtility, ceAuth) {
 
     ceAuth.validateConfig();
 
     return {getInstances: getInstances, getInstance: getInstance};
 
     function getInstances() {
-      return $http
-        .get(ceAuth.config.baseUrl + '/instances')
-        .then(function (response) {
-          return httpUtility.handleApiResponse(response);
-        })
-        .catch(function (error) {
-          return httpUtility.handleApiFailure(error);
-        });
+      return httpUtility.get("/instances");
     }
 
     function getInstance(instanceId) {
-      return $http
-        .get(ceAuth.config.baseUrl + '/instances/' + instanceId)
-        .then(function (response) {
-          return httpUtility.handleApiResponse(response);
-        })
-        .catch(function (error) {
-          return httpUtility.handleApiFailure(error);
-        })
+      return httpUtility.get("/instances/" + instanceId);
     }
 
   }

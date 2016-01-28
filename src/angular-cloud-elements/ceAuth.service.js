@@ -3,9 +3,9 @@
     .module('angularCloudElements.config')
     .factory('ceAuth', ceAuth);
 
-  ceAuth.$inject = ['$http'];
+  ceAuth.$inject = ['httpUtility'];
 
-  function ceAuth($http) {
+  function ceAuth(httpUtility) {
 
     var config = {
       orgSecret: '',
@@ -31,7 +31,8 @@
       }
       this.config = config;
       validateConfig.bind(this);
-      $http.defaults.headers.common = createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret});
+      httpUtility.setHeaders(createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret}));
+      httpUtility.setBaseUrl(this.config.baseUrl);
     }
 
     function createHeaders(config) {

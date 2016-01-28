@@ -10,9 +10,10 @@ describe('ceAuth', function () {
   var ceAuth;
 
   beforeEach(module('angularCloudElements.config'));
-  beforeEach(inject(function (_ceAuth_, _$http_) {
+  beforeEach(module('angularCloudElements.utilities'));
+  beforeEach(inject(function (_ceAuth_, _httpUtility_) {
     ceAuth = _ceAuth_;
-    $http = _$http_;
+    httpUtility = _httpUtility_;
   }));
 
   it('is a valid service', function () {
@@ -52,15 +53,17 @@ describe('ceAuth', function () {
   });
 
   it('updates $http headers', function() {
-    expect($http.defaults.headers.common.Authorization).to.be.undefined;
-    expect($http.defaults.headers.common['Content-Type']).to.be.undefined;
+    expect(httpUtility.getHeaders()).to.be.undefined;
+    expect(httpUtility.getBaseUrl()).to.be.undefined;
     ceAuth.setConfig({
       userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
       orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
       baseUrl: 'http://localhost:8080'
     });
-    expect($http.defaults.headers.common.Authorization).to.equal('User fds1a2sg456gfs98afd12s3f4as86df98sda, Organization 123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4');
-    expect($http.defaults.headers.common['Content-Type']).to.equal('application/json');
+    expect(httpUtility.getHeaders()).to.deep.equal({
+      "Authorization": 'User fds1a2sg456gfs98afd12s3f4as86df98sda, Organization 123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
+      "Content-Type": "application/json"
+    });
   })
 
 
