@@ -10,6 +10,19 @@ describe('ceElements', function () {
     $http = _$http_;
     $httpBackend = _$httpBackend_;
     ceAuth = _ceAuth_;
+    instance = {
+      "id": 5,
+      "name": "pipedriv",
+      "element": {
+        "id": 150,
+        "hub": "crm"
+      },
+      "configuration": {
+        "base.url": "https://api.pipedrive.com/v1",
+        "event.notification.enabled": "false"
+      },
+      "cachingEnabled": false
+    };
 
     ceAuth.setConfig({userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda', orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4', baseUrl: 'http://localhost:8080/elements/api-v2'});
   }));
@@ -20,7 +33,7 @@ describe('ceElements', function () {
   })
 
   it('can make a request to retrieve all instances', function () {
-    var response;
+    var expected;
     var instances = [
       {
         "id": 1,
@@ -43,33 +56,20 @@ describe('ceElements', function () {
 
     ceElements
       .getInstances()
-      .then(function (data) {
-        response = data;
+      .then(function (response) {
+        expected = response.data;
       });
 
     $httpBackend.flush();
 
-    expect(response)
+    expect(expected)
       .to
       .deep
       .equal(instances);
   });
 
-  it('can make a request to retrieve an instance by id', function () {
-    var response;
-    var instance = {
-      "id": 5,
-      "name": "pipedriv",
-      "element": {
-        "id": 150,
-        "hub": "crm"
-      },
-      "configuration": {
-        "base.url": "https://api.pipedrive.com/v1",
-        "event.notification.enabled": "false"
-      },
-      "cachingEnabled": false
-    };
+  it('makes a request to retrieve an instance when calling getInstance()', function () {
+    var expected;
 
     $httpBackend
       .when('GET', 'http://localhost:8080/elements/api-v2/instances/5')
@@ -77,17 +77,37 @@ describe('ceElements', function () {
 
     ceElements
       .getInstance(5)
-      .then(function (data) {
-        response = data;
+      .then(function (response) {
+        expected = response.data;
       });
 
     $httpBackend.flush();
 
-    expect(response)
+    expect(expected)
       .to
       .deep
       .equal(instance);
 
+  })
+
+  it('makes a request to create an instance when calling createInstance()', function () {
+    var expected;
+    $httpBackend
+      .when('POST', 'http://localhost:8080/elements/api-v2/instances', {name: 'foo'})
+      .respond(200, {
+        id: 1,
+        name: 'foo'
+      });
+
+    ceElements.createInstance({
+      name: 'foo'
+    }).then(function(response) {
+      expected = response.data;
+    });
+
+    $httpBackend.flush();
+
+    expect(expected).to.deep.equal({id: 1, name: 'foo'});
   })
 
 });
