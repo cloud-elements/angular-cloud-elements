@@ -11,7 +11,13 @@
 
     ceAuth.validateConfig();
 
-    return {getInstances: getInstances, getInstance: getInstance, createInstance: createInstance, updateInstance: updateInstance, deleteInstance: deleteInstance};
+    return {
+      getInstances: getInstances,
+      getInstance: getInstance,
+      createInstance: createInstance,
+      updateInstance: updateInstance,
+      deleteInstance: deleteInstance
+    };
 
     function getInstances() {
       return httpUtility.get('/instances');
