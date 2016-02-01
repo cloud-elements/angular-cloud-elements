@@ -35,7 +35,8 @@
       }
       this.config = config;
       validateConfig.bind(this);
-      httpUtility.setHeaders(createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret}));
+      var headersFromConfig = createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret});
+      httpUtility.setHeaders(headersFromConfig);
       httpUtility.setBaseUrl(this.config.baseUrl);
     }
 
