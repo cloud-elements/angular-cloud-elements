@@ -147,11 +147,13 @@
       getFormula: getFormula,
       getFormulaInstances: getFormulaInstances,
       getAllFormulaInstances: getAllFormulaInstances,
+      getFormulaInstance: getFormulaInstance,
       createFormulaInstance: createFormulaInstance,
       updateFormulaInstance: updateFormulaInstance,
       deleteFormulaInstance: deleteFormulaInstance,
       getAllFormulaInstanceExecutions: getAllFormulaInstanceExecutions,
-      getFormulaInstanceExecutions: getFormulaInstanceExecutions
+      getFormulaInstanceExecutions: getFormulaInstanceExecutions,
+      getFormulaInstanceExecution: getFormulaInstanceExecution
     };
 
     function getFormulas() {
@@ -192,6 +194,10 @@
 
     function getFormulaInstanceExecutions(formulaId, formulaInstanceId) {
       return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions');
+    }
+
+    function getFormulaInstanceExecution(formulaId, formulaInstanceId, executionId) {
+      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions/' + executionId);
     }
 
   }
