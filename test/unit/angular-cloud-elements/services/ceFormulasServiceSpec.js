@@ -10,6 +10,7 @@ describe('ceFormulas', function () {
     $http = _$http_;
     $httpBackend = _$httpBackend_;
     ceAuth = _ceAuth_;
+    BASE_URL = 'http://localhost:8080/elements/api-v2'
     instance = {
       "id": 5,
       "name": "pipedriv",
@@ -24,7 +25,7 @@ describe('ceFormulas', function () {
       "cachingEnabled": false
     };
 
-    ceAuth.setConfig({userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda', orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4', baseUrl: 'http://localhost:8080/elements/api-v2'});
+    ceAuth.setConfig({userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda', orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4', baseUrl: BASE_URL});
   }));
 
   afterEach(function () {
@@ -66,6 +67,45 @@ describe('ceFormulas', function () {
       .to
       .deep
       .equal(instances);
+  });
+
+  it('makes a request to the appropriate url for getFormulaInstance()', function () {
+    var expected;
+
+    $httpBackend
+      .expectGET(BASE_URL + '/formulas/10/instances/5')
+      .respond(instance);
+
+    ceFormulas
+      .getFormulaInstance(10, 5)
+      .then(function (response) {
+        expected = response.data;
+      });
+
+    $httpBackend.flush();
+
+    expect(expected)
+      .to
+      .deep
+      .equal(instance);
+  });
+
+  it('makes a request to the appropriate url for getFormulaInstances()', function () {
+    var expected;
+    $httpBackend
+      .expectGET(BASE_URL + '/formulas/15/instances')
+      .respond(200);
+
+    ceFormulas
+      .getFormulaInstances(15)
+      .then(function (response) {
+        expected = response.status;
+      });
+
+    $httpBackend.flush();
+    expect(expected)
+      .to
+      .equal(200);
   });
 
 });
