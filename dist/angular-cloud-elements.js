@@ -63,7 +63,8 @@
       }
       this.config = config;
       validateConfig.bind(this);
-      httpUtility.setHeaders(createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret}));
+      var headersFromConfig = createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret});
+      httpUtility.setHeaders(headersFromConfig);
       httpUtility.setBaseUrl(this.config.baseUrl);
     }
 
@@ -146,11 +147,13 @@
       getFormula: getFormula,
       getFormulaInstances: getFormulaInstances,
       getAllFormulaInstances: getAllFormulaInstances,
+      getFormulaInstance: getFormulaInstance,
       createFormulaInstance: createFormulaInstance,
       updateFormulaInstance: updateFormulaInstance,
       deleteFormulaInstance: deleteFormulaInstance,
       getAllFormulaInstanceExecutions: getAllFormulaInstanceExecutions,
-      getFormulaInstanceExecutions: getFormulaInstanceExecutions
+      getFormulaInstanceExecutions: getFormulaInstanceExecutions,
+      getFormulaInstanceExecution: getFormulaInstanceExecution
     };
 
     function getFormulas() {
@@ -191,6 +194,10 @@
 
     function getFormulaInstanceExecutions(formulaId, formulaInstanceId) {
       return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions');
+    }
+
+    function getFormulaInstanceExecution(formulaId, formulaInstanceId, executionId) {
+      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions/' + executionId);
     }
 
   }
