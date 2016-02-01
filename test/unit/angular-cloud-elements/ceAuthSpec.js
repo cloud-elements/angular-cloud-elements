@@ -65,6 +65,19 @@ describe('ceAuth', function () {
       "Content-Type": "application/json"
     });
     expect(httpUtility.getBaseUrl()).to.equal('http://localhost:8080');
+  });
+
+  it('can clear the config', function() {
+    expect(httpUtility.getHeaders()).to.be.undefined;
+    ceAuth.setConfig({
+      userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
+      orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
+      baseUrl: 'http://localhost:8080'
+    });
+    expect(httpUtility.getHeaders()).to.not.be.undefined;
+    ceAuth.clearConfig();
+    expect(httpUtility.getHeaders()).to.deep.equal({});
+    expect(httpUtility.getBaseUrl()).to.equal('');
   })
 
 
