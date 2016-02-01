@@ -108,4 +108,22 @@ describe('ceFormulas', function () {
       .equal(200);
   });
 
+  it('makes a request to the appropriate url for getAllFormulaInstanceExecutions()', function () {
+    var expected;
+    $httpBackend
+      .expectGET(BASE_URL + '/formulas/instances/executions')
+      .respond(200);
+
+    ceFormulas
+      .getAllFormulaInstanceExecutions()
+      .then(function (response) {
+        expected = response.status;
+      });
+
+    $httpBackend.flush();
+    expect(expected)
+      .to
+      .equal(200);
+  })
+
 });
