@@ -14,3 +14,5 @@ test:
     - bower install
   override:
     - gulp test
+  post:
+    - npm run coveralls

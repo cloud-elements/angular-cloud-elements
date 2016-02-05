@@ -19,3 +19,4 @@ bower
 
 # Test coverage
 test/coverage/
+.coveralls.yml
