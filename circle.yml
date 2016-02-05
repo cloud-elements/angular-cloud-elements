@@ -2,6 +2,9 @@ machine:
   node:
     version: 5.4.0
 
+general:
+    artifacts:
+        test/coverage
 
 test:
   pre:
