@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai'],
+    frameworks: ['mocha', 'sinon-chai'],
 
     plugins: [
       'karma-mocha',
@@ -18,9 +18,8 @@ module.exports = function(config) {
       'karma-sinon-chai',
       'karma-chrome-launcher',
       'karma-phantomjs-launcher',
-      'karma-jquery',
-      'karma-chai-jquery',
-      'karma-spec-reporter'
+      'karma-spec-reporter',
+      'karma-coverage'
     ],
 
     // list of files / patterns to load in the browser
@@ -44,13 +43,20 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/**/*.js': 'coverage'
+    },
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'test/',
+      subdir: 'coverage'
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'spec'],
+    reporters: ['progress', 'spec', 'coverage'],
 
 
     // web server port
