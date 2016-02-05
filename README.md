@@ -1,7 +1,7 @@
 # angular-cloud-elements
 An AngularJS Library for interacting with the Cloud Elements Platform APIs
 
-[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements) [![Circle CI](https://circleci.com/gh/cloud-elements/angular-cloud-elements.svg?style=shield&circle-token=9a23de117e2792ad4eced80dc32eb6db792bcb00)](https://circleci.com/gh/cloud-elements/angular-cloud-elements)
+[![npm version](https://badge.fury.io/js/angular-cloud-elements.svg)](https://badge.fury.io/js/angular-cloud-elements) [![Circle CI](https://circleci.com/gh/cloud-elements/angular-cloud-elements.svg?style=shield&circle-token=9a23de117e2792ad4eced80dc32eb6db792bcb00)](https://circleci.com/gh/cloud-elements/angular-cloud-elements) [![Coverage Status](https://coveralls.io/repos/github/cloud-elements/angular-cloud-elements/badge.svg?branch=master&t=C2hT1x)](https://coveralls.io/github/cloud-elements/angular-cloud-elements?branch=master)
 
 ## Features
 - `ceElements` for interacting with Elements and Element Instances APIs
