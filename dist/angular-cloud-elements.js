@@ -5,27 +5,23 @@
   // before all nested files are concatenated by Gulp
 
   // Config
-  angular.module('angularCloudElements.config', [])
-      .value('angularCloudElements.config', {
-          debug: true
-      });
+  angular
+    .module('angularCloudElements.config', [])
+    .value('angularCloudElements.config', {
+      debug: true
+    });
 
   // Modules
   angular.module('angularCloudElements.utilities', []);
   angular.module('angularCloudElements.directives', []);
   angular.module('angularCloudElements.filters', []);
   angular.module('angularCloudElements.services', []);
-  angular.module('angularCloudElements',
-      [
-          'angularCloudElements.config',
-          'angularCloudElements.utilities',
-          'angularCloudElements.directives',
-          'angularCloudElements.filters',
-          'angularCloudElements.services'
-      ]);
+  angular.module('angularCloudElements', ['angularCloudElements.config',
+    'angularCloudElements.utilities', 'angularCloudElements.directives',
+    'angularCloudElements.filters', 'angularCloudElements.services'
+  ]);
 
 })(angular);
-
 (function () {
   angular
     .module('angularCloudElements.config')
@@ -34,42 +30,29 @@
   ceAuth.$inject = ['httpUtility'];
 
   function ceAuth(httpUtility) {
-    var config = {
-      orgSecret: '',
-      userSecret: '',
-      baseUrl: ''
+
+    return {
+      setConfig: setConfig,
+      clearConfig: clearConfig
     };
 
-    return {config: config, validateConfig: validateConfig, setConfig: setConfig, clearConfig: clearConfig};
-
-    function validateConfig() {
-      var hasUserSecret = this
-        .config
-        .hasOwnProperty('userSecret');
-      var hasOrgSecret = this
-        .config
-        .hasOwnProperty('orgSecret');
-      var hasBaseUrl = this
-        .config
-        .hasOwnProperty('baseUrl');
-      if (!(hasUserSecret && hasOrgSecret && hasBaseUrl)) {
-        throw new Error("The configuration object is invalid");
-      }
-    }
-
     function setConfig(config) {
+      var service = this;
       if (!angular.isObject(config)) {
-        throw new Error("Options must be an object");
+        throw new Error('Configuration must be an object');
       }
-      this.config = config;
-      validateConfig.bind(this);
-      var headersFromConfig = createHeaders({userSecret: this.config.userSecret, orgSecret: this.config.orgSecret});
+      service.config = config;
+      var headersFromConfig = createHeaders({
+        userSecret: service.config.userSecret,
+        orgSecret: service.config.orgSecret
+      });
       httpUtility.setHeaders(headersFromConfig);
-      httpUtility.setBaseUrl(this.config.baseUrl);
+      httpUtility.setBaseUrl(service.config.baseUrl);
     }
 
     function clearConfig() {
-      this.config = {};
+      var service = this;
+      service.config = {};
       httpUtility.setHeaders({});
       httpUtility.setBaseUrl('');
     }
@@ -77,13 +60,15 @@
     function createHeaders(config) {
       var userSecret = config.userSecret;
       var orgSecret = config.orgSecret;
-      var authString = "User " + userSecret + ", Organization " + orgSecret;
-      return {"Authorization": authString, "Content-Type": "application/json"};
+      var authString = 'User ' + userSecret + ', Organization ' + orgSecret;
+      return {
+        'Authorization': authString,
+        'Content-Type': 'application/json'
+      };
     }
   }
 
 })();
-
 (function () {
   'use strict';
 
@@ -94,8 +79,6 @@
   ceElements.$inject = ['httpUtility', 'ceAuth'];
 
   function ceElements(httpUtility, ceAuth) {
-
-    ceAuth.validateConfig();
 
     return {
       getInstances: getInstances,
@@ -128,7 +111,6 @@
   }
 
 })();
-
 (function () {
   'use strict';
 
@@ -139,8 +121,6 @@
   ceFormulas.$inject = ['httpUtility', 'ceAuth'];
 
   function ceFormulas(httpUtility, ceAuth) {
-
-    ceAuth.validateConfig();
 
     return {
       getFormulas: getFormulas,
@@ -173,19 +153,24 @@
     }
 
     function getFormulaInstance(formulaId, formulaInstanceId) {
-      return httpUtility.get('/formulas/' + formulaId + '/instances/' + formulaInstanceId);
+      return httpUtility.get('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId);
     }
 
     function createFormulaInstance(formulaId, formulaInstance) {
-      return httpUtility.post('/formulas/' + formulaId + '/instances', formulaInstance);
+      return httpUtility.post('/formulas/' + formulaId + '/instances',
+        formulaInstance);
     }
 
-    function updateFormulaInstance(formulaId, formulaInstanceId, formulaInstance) {
-      return httpUtility.patch('/formulas/' + formulaId + '/instances/' + formulaInstanceId, formulaInstance);
+    function updateFormulaInstance(formulaId, formulaInstanceId,
+      formulaInstance) {
+      return httpUtility.patch('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId, formulaInstance);
     }
 
     function deleteFormulaInstance(formulaId, formulaInstanceId) {
-      return httpUtility.delete('/formulas/' + formulaId + '/instances/' + formulaInstanceId);
+      return httpUtility.delete('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId);
     }
 
     function getAllFormulaInstanceExecutions() {
@@ -193,17 +178,19 @@
     }
 
     function getFormulaInstanceExecutions(formulaId, formulaInstanceId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions');
+      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+        formulaInstanceId + '/executions');
     }
 
-    function getFormulaInstanceExecution(formulaId, formulaInstanceId, executionId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions/' + executionId);
+    function getFormulaInstanceExecution(formulaId, formulaInstanceId,
+      executionId) {
+      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+        formulaInstanceId + '/executions/' + executionId);
     }
 
   }
 
 })();
-
 (function () {
   'use strict';
 

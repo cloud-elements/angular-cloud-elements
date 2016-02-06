@@ -1,13 +1,8 @@
-Function.prototype.bind = Function.prototype.bind || function (thisp) {
-  var fn = this;
-  return function () {
-    return fn.apply(thisp, arguments);
-  };
-};
-
 describe('httpUtility', function () {
 
   var ceAuth;
+  var httpUtility;
+  var $httpBackend;
 
   beforeEach(module('angularCloudElements.utilities'));
   beforeEach(module('angularCloudElements.config'));
@@ -15,17 +10,20 @@ describe('httpUtility', function () {
     httpUtility = _httpUtility_;
     $httpBackend = _$httpBackend_;
     ceAuth = _ceAuth_;
-    ceAuth.setConfig({baseUrl: ''});
+    ceAuth.setConfig({
+      baseUrl: ''
+    });
   }));
 
   it('is a valid service', function () {
-    expect(httpUtility).to.be.ok;
-  })
+    expect(httpUtility)
+      .to.be.ok;
+  });
 
   it('returns rejected promise data for errors', function () {
     $httpBackend
       .when('GET', '/error')
-      .respond(400, 'failure')
+      .respond(400, 'failure');
 
     var expected;
 
@@ -42,24 +40,31 @@ describe('httpUtility', function () {
       .to
       .equal('failure');
 
-  })
+  });
 
   it('can make a get request', function () {
     $httpBackend
       .expectGET('/instances')
       .respond('200');
-    httpUtility.get("/instances");
+    httpUtility.get('/instances');
     $httpBackend.flush();
 
   });
 
   it('can make a post request', function () {
     var expected;
+    var code;
     $httpBackend
-      .expectPOST('/instances', {name: 'foo'})
-      .respond(200, {name: 'foo'});
+      .expectPOST('/instances', {
+        name: 'foo'
+      })
+      .respond(200, {
+        name: 'foo'
+      });
     httpUtility
-      .post("/instances", {name: 'foo'})
+      .post('/instances', {
+        name: 'foo'
+      })
       .then(function (response) {
         code = response.status;
         expected = response.data;
@@ -71,17 +76,26 @@ describe('httpUtility', function () {
     expect(expected)
       .to
       .deep
-      .equal({name: 'foo'});
+      .equal({
+        name: 'foo'
+      });
 
   });
 
   it('can make a patch request', function () {
     var expected;
+    var code;
     $httpBackend
-      .expectPATCH('/instances/1', {name: 'foo'})
-      .respond(200, {name: 'foo'});
+      .expectPATCH('/instances/1', {
+        name: 'foo'
+      })
+      .respond(200, {
+        name: 'foo'
+      });
     httpUtility
-      .patch("/instances/1", {name: 'foo'})
+      .patch('/instances/1', {
+        name: 'foo'
+      })
       .then(function (response) {
         code = response.status;
         expected = response.data;
@@ -93,7 +107,9 @@ describe('httpUtility', function () {
     expect(expected)
       .to
       .deep
-      .equal({name: 'foo'});
+      .equal({
+        name: 'foo'
+      });
   });
 
   it('can make a delete request', function () {
@@ -106,10 +122,10 @@ describe('httpUtility', function () {
       .then(function (response) {
         expected = response.status;
       });
-    $httpBackend.flush()
+    $httpBackend.flush();
     expect(expected)
       .to
       .equal(200);
-  })
+  });
 
 });
