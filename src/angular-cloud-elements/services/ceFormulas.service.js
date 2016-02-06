@@ -9,8 +9,6 @@
 
   function ceFormulas(httpUtility, ceAuth) {
 
-    ceAuth.validateConfig();
-
     return {
       getFormulas: getFormulas,
       getFormula: getFormula,
@@ -42,19 +40,24 @@
     }
 
     function getFormulaInstance(formulaId, formulaInstanceId) {
-      return httpUtility.get('/formulas/' + formulaId + '/instances/' + formulaInstanceId);
+      return httpUtility.get('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId);
     }
 
     function createFormulaInstance(formulaId, formulaInstance) {
-      return httpUtility.post('/formulas/' + formulaId + '/instances', formulaInstance);
+      return httpUtility.post('/formulas/' + formulaId + '/instances',
+        formulaInstance);
     }
 
-    function updateFormulaInstance(formulaId, formulaInstanceId, formulaInstance) {
-      return httpUtility.patch('/formulas/' + formulaId + '/instances/' + formulaInstanceId, formulaInstance);
+    function updateFormulaInstance(formulaId, formulaInstanceId,
+      formulaInstance) {
+      return httpUtility.patch('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId, formulaInstance);
     }
 
     function deleteFormulaInstance(formulaId, formulaInstanceId) {
-      return httpUtility.delete('/formulas/' + formulaId + '/instances/' + formulaInstanceId);
+      return httpUtility.delete('/formulas/' + formulaId + '/instances/' +
+        formulaInstanceId);
     }
 
     function getAllFormulaInstanceExecutions() {
@@ -62,11 +65,14 @@
     }
 
     function getFormulaInstanceExecutions(formulaId, formulaInstanceId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions');
+      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+        formulaInstanceId + '/executions');
     }
 
-    function getFormulaInstanceExecution(formulaId, formulaInstanceId, executionId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' + formulaInstanceId + '/executions/' + executionId);
+    function getFormulaInstanceExecution(formulaId, formulaInstanceId,
+      executionId) {
+      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+        formulaInstanceId + '/executions/' + executionId);
     }
 
   }

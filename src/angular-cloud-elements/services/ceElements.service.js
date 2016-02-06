@@ -9,8 +9,6 @@
 
   function ceElements(httpUtility, ceAuth) {
 
-    ceAuth.validateConfig();
-
     return {
       getInstances: getInstances,
       getInstance: getInstance,

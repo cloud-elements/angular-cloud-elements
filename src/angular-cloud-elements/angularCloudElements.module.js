@@ -5,23 +5,20 @@
   // before all nested files are concatenated by Gulp
 
   // Config
-  angular.module('angularCloudElements.config', [])
-      .value('angularCloudElements.config', {
-          debug: true
-      });
+  angular
+    .module('angularCloudElements.config', [])
+    .value('angularCloudElements.config', {
+      debug: true
+    });
 
   // Modules
   angular.module('angularCloudElements.utilities', []);
   angular.module('angularCloudElements.directives', []);
   angular.module('angularCloudElements.filters', []);
   angular.module('angularCloudElements.services', []);
-  angular.module('angularCloudElements',
-      [
-          'angularCloudElements.config',
-          'angularCloudElements.utilities',
-          'angularCloudElements.directives',
-          'angularCloudElements.filters',
-          'angularCloudElements.services'
-      ]);
+  angular.module('angularCloudElements', ['angularCloudElements.config',
+    'angularCloudElements.utilities', 'angularCloudElements.directives',
+    'angularCloudElements.filters', 'angularCloudElements.services'
+  ]);
 
 })(angular);
