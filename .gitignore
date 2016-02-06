@@ -16,3 +16,7 @@ libpeerconnection.log
 
 # Bower components
 bower
+
+# Test coverage
+test/coverage/
+.coveralls.yml
