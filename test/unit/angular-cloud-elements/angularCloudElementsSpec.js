@@ -16,23 +16,28 @@ describe('', function () {
   });
 
   it('should load config module', function () {
-    expect(hasModule('angularCloudElements.config')).to.be.ok;
+    expect(hasModule('angularCloudElements.config'))
+      .to.be.ok;
   });
 
   it('should load utilities module', function () {
-    expect(hasModule('angularCloudElements.utilities')).to.be.ok;
+    expect(hasModule('angularCloudElements.utilities'))
+      .to.be.ok;
   });
 
   it('should load filters module', function () {
-    expect(hasModule('angularCloudElements.filters')).to.be.ok;
+    expect(hasModule('angularCloudElements.filters'))
+      .to.be.ok;
   });
 
   it('should load directives module', function () {
-    expect(hasModule('angularCloudElements.directives')).to.be.ok;
+    expect(hasModule('angularCloudElements.directives'))
+      .to.be.ok;
   });
 
   it('should load services module', function () {
-    expect(hasModule('angularCloudElements.services')).to.be.ok;
+    expect(hasModule('angularCloudElements.services'))
+      .to.be.ok;
   });
 
 });
