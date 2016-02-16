@@ -65,13 +65,13 @@
     }
 
     function getFormulaInstanceExecutions(formulaId, formulaInstanceId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+      return httpUtility.get('/formulas/' + formulaId + '/instances/' +
         formulaInstanceId + '/executions');
     }
 
     function getFormulaInstanceExecution(formulaId, formulaInstanceId,
       executionId) {
-      return httpUtility.get('/formulas' + formulaId + '/instances/' +
+      return httpUtility.get('/formulas/' + formulaId + '/instances/' +
         formulaInstanceId + '/executions/' + executionId);
     }
 
