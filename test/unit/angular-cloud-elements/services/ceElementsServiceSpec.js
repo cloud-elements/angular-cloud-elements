@@ -31,7 +31,7 @@ describe('ceElements', function () {
     ceAuth.setConfig({
       userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
       orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
-      baseUrl: 'http://localhost:8080/elements/api-v2'
+      baseUrl: 'http://ce.com/elements/api-v2'
     });
   }));
 
@@ -42,36 +42,22 @@ describe('ceElements', function () {
 
   it('can make a request to retrieve all instances', function () {
     var expected;
-    var instances = [{
-      'id': 1,
-      'name': 'pipedriv',
-      'element': {
-        'id': 150,
-        'hub': 'crm'
-      },
-      'configuration': {
-        'base.url': 'https://api.pipedrive.com/v1',
-        'event.notification.enabled': 'false'
-      },
-      'cachingEnabled': false
-    }];
 
     $httpBackend
-      .when('GET', 'http://localhost:8080/elements/api-v2/instances')
-      .respond(instances);
+      .when('GET', 'http://ce.com/elements/api-v2/instances')
+      .respond(200);
 
     ceElements
       .getInstances()
       .then(function (response) {
-        expected = response.data;
+        expected = response.status;
       });
 
     $httpBackend.flush();
 
     expect(expected)
       .to
-      .deep
-      .equal(instances);
+      .equal(200);
   });
 
   it('makes a request to retrieve an instance when calling getInstance()',
@@ -79,29 +65,29 @@ describe('ceElements', function () {
       var expected;
 
       $httpBackend
-        .when('GET', 'http://localhost:8080/elements/api-v2/instances/5')
-        .respond(instance);
+        .when('GET', 'http://ce.com/elements/api-v2/instances/5')
+        .respond(200);
 
       ceElements
         .getInstance(5)
         .then(function (response) {
-          expected = response.data;
+          expected = response.status;
         });
 
       $httpBackend.flush();
 
       expect(expected)
         .to
-        .deep
-        .equal(instance);
+        .equal(200);
 
     });
 
   it('makes a request to create an instance when calling createInstance()',
     function () {
       var expected;
+      var status;
       $httpBackend
-        .when('POST', 'http://localhost:8080/elements/api-v2/instances', {
+        .when('POST', 'http://ce.com/elements/api-v2/instances', {
           name: 'foo'
         })
         .respond(200, {
@@ -115,6 +101,7 @@ describe('ceElements', function () {
         })
         .then(function (response) {
           expected = response.data;
+          status = response.status;
         });
 
       $httpBackend.flush();
@@ -126,6 +113,65 @@ describe('ceElements', function () {
           id: 1,
           name: 'foo'
         });
+
+      expect(status)
+        .to.equal(200);
+
     });
 
+  it('makes a request to update an instance when calling updateInstance()',
+    function () {
+      var expected;
+      var status;
+      $httpBackend
+        .when('PATCH', 'http://ce.com/elements/api-v2/instances/1', {
+          name: 'bar'
+        })
+        .respond(200, {
+          id: 1,
+          name: 'bar'
+        });
+
+      ceElements
+        .updateInstance(1, {
+          name: 'bar'
+        })
+        .then(function (response) {
+          expected = response.data;
+          status = response.status;
+        });
+
+      $httpBackend.flush();
+
+      expect(expected)
+        .to
+        .deep
+        .equal({
+          id: 1,
+          name: 'bar'
+        });
+
+      expect(status)
+        .to.equal(200);
+
+    });
+
+  it('makes a request to delete an instance when calling deleteInstance()',
+    function () {
+      var status;
+      $httpBackend
+        .when('DELETE', 'http://ce.com/elements/api-v2/instances/1')
+        .respond(200);
+
+      ceElements
+        .deleteInstance(1)
+        .then(function (response) {
+          status = response.status;
+        });
+
+      $httpBackend.flush();
+
+      expect(status)
+        .to.equal(200);
+    });
 });

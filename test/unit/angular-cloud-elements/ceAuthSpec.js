@@ -22,7 +22,7 @@ describe('ceAuth', function () {
       ceAuth.setConfig({
         userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
         orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
-        baseUrl: 'http://localhost:8080'
+        baseUrl: 'http://ce.com'
       });
       expect(ceAuth.config.userSecret)
         .to
@@ -30,10 +30,9 @@ describe('ceAuth', function () {
       expect(ceAuth.config.orgSecret)
         .to
         .equal('123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4');
-      expect(ceAuth.config
-          .baseUrl)
+      expect(ceAuth.config.baseUrl)
         .to
-        .equal('http://localhost:8080');
+        .equal('http://ce.com');
     });
 
   it('throws an error when passed an invalid config', function () {
@@ -70,7 +69,7 @@ describe('ceAuth', function () {
     ceAuth.setConfig({
       userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
       orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
-      baseUrl: 'http://localhost:8080'
+      baseUrl: 'http://ce.com'
     });
     expect(httpUtility.getHeaders())
       .to
@@ -82,7 +81,7 @@ describe('ceAuth', function () {
       });
     expect(httpUtility.getBaseUrl())
       .to
-      .equal('http://localhost:8080');
+      .equal('http://ce.com');
   });
 
   it('can clear the config', function () {
@@ -91,7 +90,7 @@ describe('ceAuth', function () {
     ceAuth.setConfig({
       userSecret: 'fds1a2sg456gfs98afd12s3f4as86df98sda',
       orgSecret: '123fdsa456f4d7as89fds423fdsa489fdsa45fdsa4',
-      baseUrl: 'http://localhost:8080'
+      baseUrl: 'http://ce.com'
     });
     expect(httpUtility.getHeaders())
       .to.not.be.undefined;
